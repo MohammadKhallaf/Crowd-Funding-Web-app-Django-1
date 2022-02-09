@@ -1,20 +1,71 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
-    {% load staticfiles %}
-    <head>
-        <meta charset="UTF-8">
-        <title>Login Page</title>
-        <link rel="stylesheet" href="{% static 'css/login.css'%}" >
-    </head>
-    <body>
-        <div class="container">
-            <h1>Login</h1>
-            <form method="POST">
-                {{form.as_p}}
-                {% csrf_token %}
-                <input type="submit" name="submit" value="submit">
-            </form>
-            <a href="{% url 'register'%}">Create New Account</a>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="{% static 'css/portal.css' %}"/>
+
+
+</head>
+<body class="app app-login p-0">
+
+<div class="row g-0 app-auth-wrapper">
+    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+        <div class="d-flex flex-column align-content-end">
+            <div class="app-auth-body mx-auto">
+                <h2 class="auth-heading text-center mb-5">Log in to Our Fund App</h2>
+                <div class="auth-form-container text-start">
+                    <div class="container">
+
+                        <form class="auth-form login-form" method="POST">
+                            {% csrf_token %}
+
+                            {{ form.as_p }}
+                            <input type="submit" name="submit" value="submit">
+                        </form>
+                        <div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link"
+                                                                                         href="{% url 'register' %}">here</a>.
+                        </div>
+
+
+                    </div>
+                </div><!--//auth-form-container-->
+
+            </div><!--//auth-body-->
+
+            <footer class="app-auth-footer">
+                <div class="container text-center py-3">
+                    <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+                    <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a
+                            class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a>
+                        for developers</small>
+
+                </div>
+            </footer><!--//app-auth-footer-->
+        </div><!--//flex-column-->
+    </div><!--//auth-main-col-->
+    <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
+        <div class="auth-background-holder">
+            <img src="{% static 'images/background-1.jpg' %}" style="height: 100%; width:100%;"/>
         </div>
-    </body>
+        <div class="auth-background-mask"></div>
+        <div class="auth-background-overlay p-3 p-lg-5">
+            <div class="d-flex flex-column align-content-end h-100">
+                <div class="h-100"></div>
+
+            </div>
+        </div><!--//auth-background-overlay-->
+    </div><!--//auth-background-col-->
+
+</div><!--//row-->
+
+</body>
 </html>

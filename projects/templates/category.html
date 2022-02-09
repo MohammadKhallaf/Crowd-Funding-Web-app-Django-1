@@ -2,17 +2,17 @@
 {% block content %}
 
 
-{% for i in category_projects %}
-<div class="latest">
-    <img src="{{ i.images.0.image.url }}" >
-    <h3>Project Title</h3>
-    <h2>{{ i.project.title }}</h2>
-    <h3>Project Target</h3>
-    <h2>{{ i.project.total_target}}</h3>
-    <h3>Project Category</h3>
-    <h2>{{ i.project.category }}</h2>
-    <a href=" {% url 'detail' i.project.id %}" target="_blank">See more</a>
-</div>
-<div class="clear"></div>
-{% endfor %}
+    {% for i in category_projects %}
+        <div class="latest">
+            <img src="{{ i.images.0.image.url }}"  alt=""/>
+            <h3>Project Title</h3>
+            <h2>{{ i.project.title }}</h2>
+            <h3>Project Target</h3>
+            <h2>{{ i.project.total_target }}</h2>
+                <h3>Project Category</h3>
+                <h2>{{ i.project.category }}</h2>
+                <a href=" {% url 'detail' i.project.id %}" target="_blank">See more</a>
+        </div>
+        <div class="clear"></div>
+    {% endfor %}
 {% endblock %}

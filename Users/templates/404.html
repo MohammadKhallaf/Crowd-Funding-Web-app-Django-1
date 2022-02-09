@@ -1,6 +1,40 @@
 {% extends 'layout.html' %}
+
 {% block title %} 404 Error {% endblock %}
-{% block content %}
-    {% load static %}
-    <img src="{% static '404.png' %}" alert="Error" class="text-center img-responsive" />
+{% block bodycontent %}
+
+<body class="app app-404-page pt-5 ">
+
+    <div class="container mb-5">
+	    <div class="row">
+		    <div class="col-12 col-md-11 col-lg-7 col-xl-6 mx-auto">
+
+			    <div class="app-card p-5 text-center shadow-sm">
+				    <h1 class="page-title mb-4">404<br><span class="font-weight-light">Page Not Found</span></h1>
+				    <div class="mb-4">
+					    Sorry, we can't find the page you're looking for.
+				    </div>
+				    <a class="btn btn-danger" href="{% url 'index' %}">Go to home page</a>
+			    </div>
+		    </div><!--//col-->
+	    </div><!--//row-->
+    </div><!--//container-->
+
+
+    <footer class="app-footer">
+	    <div class="container text-center py-3">
+	         <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+
+	    </div>
+    </footer><!--//app-footer-->
+
+
+{% load static %}
+    <script src="{% static 'js/jQueryv3.3.1.js' %}"></script>
+    {#<script src="{% static 'js/bootstrap.min.js.js' %}"></script>#}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/layout.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
 {% endblock %}

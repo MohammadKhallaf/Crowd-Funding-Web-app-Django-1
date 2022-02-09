@@ -1,64 +1,416 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{% block title %}User{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% load static %}
-        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
-        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/layout.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/addproject.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/viewproject.css' %}" />
-    </head>
-    <body>
-        <div class="header">
-            <div class="logo">
-                <h1><a href="{% url 'index' %}">Fund Me</a></h1>
-            </div>
-            <div class="menu">
-                
-                <div class="search">
-                    <form action="{% url 'search' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="text" name="search" placeholder="Type # to search by tags,or your word to search by title">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-                </div>
-                <div class="add_project">
-                    <a href="{%url 'addproject'  %}">Add Project</a>
-                </div>
-                <div class="categories">
-                    <ul>Categories
-                        {% for i in categories %}
-                            <li><a href="{% url 'category_projects' i.id %}">{{i.category}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="my_profile">
-                    <a href="{% url 'profile' user.username%}">My Profile</a>
-                </div>
-                <div class="logout">
-                    <a href="{%url 'logout'%}">Logout</a>
-                </div>
-            </div>
-            
-            <div class="clear"></div>
-        </div>
-        {% block content %}
-            <h1 class="text-center">Nothing Found</h1>
-        {% endblock %}
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}User{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/addproject.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/viewproject.css' %}"/>
 
-        <div class="footer">
-            <h4 class="text-center">This is project has done by (Naguib , Hazem , Amr , Eman)</h4>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+ <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="{% static 'css/portal.css' %}"/>
+</head>
+{% block bodycontent %}
+    <body class="app">
+
+
+    <header class="app-header fixed-top">
+        <div class="app-header-inner">
+            <div class="container-fluid py-2">
+                <div class="app-header-content">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-auto">
+                            <a
+                                    id="sidepanel-toggler"
+                                    class="sidepanel-toggler d-inline-block d-xl-none"
+                                    href="#"
+                            >
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 30 30"
+                                        role="img"
+                                >
+                                    <title>Menu</title>
+                                    <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-miterlimit="10"
+                                            stroke-width="2"
+                                            d="M4 7h22M4 15h22M4 23h22"
+                                    ></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <!--//col-->
+                        <div class="search-mobile-trigger d-sm-none col">
+                            <i class="search-mobile-trigger-icon fas fa-search"></i>
+                        </div>
+                        <!--//col-->
+                        <div class="app-search-box col">
+
+                            <form class="app-search-form" action="{% url 'search' %}" method="POST">
+                                {% csrf_token %}
+                                <input
+                                        type="text"
+                                        placeholder="Type # to search by tags,or your word to search by title"
+                                        name="search"
+                                        class="form-control search-input"
+                                />
+                                <button
+                                        type="submit"
+                                        class="btn search-btn btn-primary"
+                                        value="Search"
+                                >
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <!--//app-search-box-->
+
+                        <div class="app-utilities col-auto">
+                            <div
+                                    class="app-utility-item app-notifications-dropdown dropdown"
+                            >
+                                <a
+                                        class="dropdown-toggle no-toggle-arrow"
+                                        id="notifications-dropdown-toggle"
+                                        data-bs-toggle="dropdown"
+                                        href="#"
+                                        role="button"
+                                        aria-expanded="false"
+                                        title="Notifications"
+                                >
+
+
+                                    <!--//dropdown-menu-->
+                            </div>
+                            <!--//app-utility-item-->
+                            <div class="app-utility-item">
+                                <a href="{% url 'admin:index' %}" title="Admin Panel">
+                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                    <svg
+                                            width="1em"
+                                            height="1em"
+                                            viewBox="0 0 16 16"
+                                            class="bi bi-gear icon"
+                                            fill="currentColor"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z"
+                                        />
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z"
+                                        />
+                                    </svg>
+                                </a>
+                            </div>
+                            <!--//app-utility-item-->
+
+                            <div class="app-utility-item app-user-dropdown dropdown">
+                                <a
+                                        class="dropdown-toggle"
+                                        id="user-dropdown-toggle"
+                                        data-bs-toggle="dropdown"
+                                        href="#"
+                                        role="button"
+                                        aria-expanded="false"
+                                ><img src="{{ addtionalinfo.image.url }}"
+                                      style="border-radius: 50%;border: 1px solid #222;"
+                                      alt="user profile"
+                                /></a>
+                                <ul
+                                        class="dropdown-menu"
+                                        aria-labelledby="user-dropdown-toggle"
+                                >
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'profile' user.username %}">Account</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'addproject' %}">Add Project</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider"/>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--//app-user-dropdown-->
+                        </div>
+                        <!--//app-utilities-->
+                    </div>
+                    <!--//row-->
+                </div>
+                <!--//app-header-content-->
+            </div>
+            <!--//container-fluid-->
         </div>
-        {% load static %}
-        <script src="{% static 'js/jQueryv3.3.1.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
-        <script src="{% static 'js/layout.js' %}"></script>
+        <!--//app-header-inner-->
+        <div id="app-sidepanel" class="app-sidepanel">
+            <div id="sidepanel-drop" class="sidepanel-drop"></div>
+            <div class="sidepanel-inner d-flex flex-column">
+                <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none"
+                >&times;</a
+                >
+                <div class="app-branding">
+                    <a class="app-logo" href="{% url 'index' %}"
+                    ><span class="logo-text">Funding App</span></a
+                    >
+                </div>
+                <!--//app-branding-->
+
+                <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+                    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+                        <li class="nav-item">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a class="nav-link active" href="{% url 'index' %}">
+                  <span class="nav-icon">
+                    <svg
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 16 16"
+                            class="bi bi-house-door"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                              fill-rule="evenodd"
+                              d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"
+                      />
+                      <path
+                              fill-rule="evenodd"
+                              d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+                      />
+                    </svg>
+                  </span>
+                                <span class="nav-link-text">Overview</span> </a
+                            ><!--//nav-link-->
+                        </li>
+
+                        <!--//nav-item-->
+                        <li class="nav-item has-submenu">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a
+                                    class="nav-link submenu-toggle"
+                                    href="#"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#submenu-1"
+                                    aria-expanded="false"
+                                    aria-controls="submenu-1"
+                            >
+                  <span class="nav-icon">
+                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                    <svg
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 16 16"
+                            class="bi bi-files"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                              fill-rule="evenodd"
+                              d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z"
+                      />
+                      <path
+                              d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z"
+                      />
+                    </svg>
+                  </span>
+                                <span class="nav-link-text">Categories</span>
+                                <span class="submenu-arrow">
+                    <svg
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 16 16"
+                            class="bi bi-chevron-down"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                              fill-rule="evenodd"
+                              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                      />
+                    </svg> </span
+                                ><!--//submenu-arrow--> </a
+                            ><!--//nav-link-->
+                            <div
+                                    id="submenu-1"
+                                    class="collapse submenu submenu-1"
+                                    data-bs-parent="#menu-accordion"
+                            >
+
+
+                                <ul class="submenu-list list-unstyled">
+                                    {% for x in categories %}
+                                        <li class="submenu-item">
+                                            <a class="submenu-link" href="{% url 'category_projects' x.id %}"
+                                            >{{ x.category }}</a
+                                            >
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </li>
+                        <!--//nav-item-->
+                        <li class="nav-item has-submenu">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a
+                                    class="nav-link submenu-toggle"
+                                    href="#"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#submenu-2"
+                                    aria-expanded="false"
+                                    aria-controls="submenu-2"
+                            >
+                  <span class="nav-icon">
+                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                    <svg
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 16 16"
+                            class="bi bi-columns-gap"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                              fill-rule="evenodd"
+                              d="M6 1H1v3h5V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12h-5v3h5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8H1v7h5V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6h-5v7h5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z"
+                      />
+                    </svg>
+                  </span>
+                                <span class="nav-link-text">External</span>
+                                <span class="submenu-arrow">
+                    <svg
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 16 16"
+                            class="bi bi-chevron-down"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                              fill-rule="evenodd"
+                              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                      />
+                    </svg> </span
+                                ><!--//submenu-arrow--> </a
+                            ><!--//nav-link-->
+                            <div
+                                    id="submenu-2"
+                                    class="collapse submenu submenu-2"
+                                    data-bs-parent="#menu-accordion"
+                            >
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item">
+                                        <a class="submenu-link" href="{% url 'login' %}">Login</a>
+                                    </li>
+                                    <li class="submenu-item">
+                                        <a class="submenu-link" href="{% url 'register' %}">Signup</a>
+                                    </li>
+                                    <li class="submenu-item">
+                                        <a class="submenu-link" href="reset-password.html"
+                                        >Reset password</a
+                                        >
+                                    </li>
+                                    <li class="submenu-item">
+                                        <a class="submenu-link" href="404.html">404 page</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!--//nav-item-->
+
+
+                    </ul>
+                    <!--//app-menu-->
+                </nav>
+                <!--//app-nav-->
+                <div class="app-sidepanel-footer">
+                    <nav class="app-nav app-nav-footer">
+                        <ul class="app-menu footer-menu list-unstyled">
+                            <li class="nav-item">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link" href="{% url 'admin:index' %}">
+                    <span class="nav-icon">
+                      <svg
+                              width="1em"
+                              height="1em"
+                              viewBox="0 0 16 16"
+                              class="bi bi-gear"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                                fill-rule="evenodd"
+                                d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z"
+                        />
+                        <path
+                                fill-rule="evenodd"
+                                d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z"
+                        />
+                      </svg>
+                    </span>
+                                    <span class="nav-link-text">Admin Panel</span> </a
+                                ><!--//nav-link-->
+                            </li>
+                            <!--//nav-item-->
+
+                            <!--//nav-item-->
+                        </ul>
+                        <!--//footer-menu-->
+                    </nav>
+                </div>
+                <!--//app-sidepanel-footer-->
+            </div>
+            <!--//sidepanel-inner-->
+        </div>
+        <!--//app-sidepanel-->
+    </header>
+
+
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                {% block content %}
+                    <h1 class="app-page-title">Nothing Found</h1>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <script src="{% static 'js/jQueryv3.3.1.js' %}"></script>
+    {#<script src="{% static 'js/bootstrap.min.js.js' %}"></script>#}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/layout.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
     </body>
+{% endblock %}
 </html>
+
+
+{#-----------------------------------------------------#}
