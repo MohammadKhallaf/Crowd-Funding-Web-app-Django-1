@@ -1,0 +1,115 @@
+.clear{
+    clear:both
+}
+.header,.footer{
+    background-color:#113f67;
+}
+.logo{
+    float:left;
+    margin-left:50px
+}
+.logo a{
+    color:#FFF;
+    text-decoration:none
+}
+.menu{
+    float:right;
+    margin-right:80px;
+    margin-top:22px
+}
+.menu .logout{
+    float:right
+}
+.menu .logout a{
+    color:#FFF;
+    font-size:21px;
+    text-decoration:none;
+    margin-left:50px
+}
+.menu .my_profile{
+    float:left
+}
+.menu .my_profile a{
+    text-decoration:none;
+    color:#FFF;
+    font-size: 21px;
+    margin-left: 49px;
+}
+.menu .categories{
+    float:left;
+    font-size:21px;
+    color:#FFF
+}
+.menu .add_project{
+    float:left
+}
+.menu .add_project a{
+    text-decoration:none;
+    color:#FFF;
+    font-size:21px
+}
+.menu .search{
+    float:left;
+    margin-right:70px
+}
+.menu .search input{
+    width:270px;
+    margin-right:10px;
+    border-radius:7px;
+    height:36px;
+    border:0;
+    outline:0;
+    -webkit-border-radius:7px;
+    -moz-border-radius:7px;
+    -ms-border-radius:7px;
+    -o-border-radius:7px;
+    padding:0 10px;
+    font-size:10px;
+    color:#000
+}
+.menu ul{
+    cursor:pointer;
+}
+.menu ul li{
+    position: absolute;
+    z-index: 999;
+    list-style:none;
+    background-color:#5d5d5a;
+    padding:5px 20px;
+    width:150px
+}
+.menu ul li a:hover{
+    color:#283148
+}
+.menu ul li a{
+    color:#FFF;
+    text-decoration:none
+}
+.menu ul li:first-of-type{
+    top:68px
+}
+.menu ul li:nth-of-type(2){
+    top:107px
+}
+.menu ul li:nth-of-type(3){
+    top:147px
+}
+.menu ul li:nth-of-type(4){
+    top:187px
+}
+.menu ul li:last-of-type{
+    top:227px
+}
+.menu ul li{
+    display:none;    
+}
+.footer{
+    overflow:hidden;
+    height:70px
+}
+.footer h4{
+    line-height:70px;
+    color:#FFF;
+    padding:0;
+    margin:0
+}
